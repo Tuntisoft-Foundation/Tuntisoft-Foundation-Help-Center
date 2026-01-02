@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tuntisoft Foundation Help Center</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+  <style>
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:0;background:#f9fafb;color:#111}
+    header{background:#1e293b;color:white;padding:16px}
+    .wrap{display:grid;grid-template-columns:280px 1fr;gap:16px;padding:16px}
+    .panel{background:white;border-radius:8px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+    .list{max-height:70vh;overflow:auto}
+    button{background:#0b5fff;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
+    .preview{padding:12px;min-height:300px;background:#fff;border-radius:6px;overflow:auto}
+    h3{margin-top:0}
+    .muted{color:#6b7280;font-size:13px}
+  </style>
+</head>
+<body>
+  <header>
+    <h2 style="margin:0">Tuntisoft Foundation Help Center</h2>
+    <div style="margin-top:6px;font-size:13px;opacity:0.9">Access guides, FAQs, troubleshooting, and support resources.</div>
+  </header>
+
+  <div class="wrap">
+    <aside class="panel">
+      <h3>Sections</h3>
+      <div id="pages" class="list"></div>
+    </aside>
+
+    <main>
+      <div class="panel">
+        <h3 id="pageTitle">Welcome to Help Center</h3>
+        <div class="muted small" id="fullpath">Select a section from the left to view details.</div>
+        <div id="preview" class="preview">This Help Center provides guides and documentation for Tuntisoft projects, including Tuntiwiki, Tayo Language, and Tayo Shell.</div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    const pages = [
+      { title: 'Getting Started', content: `# Getting Started
+
+Welcome to Tuntisoft Foundation Help Center!
+
+## Installation
+- Step 1: Download Tayo
+- Step 2: Add to PATH
+- Step 3: Test installation` },
+      { title: 'Tuntiwiki', content: `# Tuntiwiki
+
+Tuntiwiki is a browser-based documentation system for Tayo language & Tayo Shell. Users can read, edit, and create Markdown pages directly from the interface.` },
+      { title: 'Tayo Language', content: `# Tayo Language Guide
+
+## Variables
+\`\`\`tayo
+x = 10
+name = "Tuntiwiki"
+print(x, name)
+\`\`\`
+
+- Variables are dynamically typed
+- Strings use double quotes` },
+      { title: 'Tayo Shell', content: `# Tayo Shell Guide
+
+- \`run <file>\`: Execute Tayo file
+- \`exit\`: Quit the shell
+- \`help\`: Show commands` },
+      { title: 'FAQ', content: `# FAQ
+
+**Q:** How do I update Tayo?
+**A:** Download the latest release and replace the binary.` },
+      { title: 'Troubleshooting', content: `# Troubleshooting
+
+- Issue: Tayo not found in PATH
+  - Solution: Add installation folder to PATH` },
+      { title: 'Contact', content: `# Contact Support
+
+- Email: support@tuntisoft.com
+- GitHub Issues: https://github.com/Tuntisoft` },
+      { title: 'Roadmap', content: `# Roadmap
+
+- Add more guides & examples
+- Expand Tayo Shell documentation
+- Implement search & version history` }
+    ];
+
+    const $ = id => document.getElementById(id);
+
+    function loadPageInline(page){
+      $('preview').innerHTML = marked.parse(page.content);
+      $('pageTitle').textContent = page.title;
+      $('fullpath').textContent = page.title;
+    }
+
+    function init(){
+      const container = $('pages');
+      pages.forEach(p=>{
+        const el = document.createElement('div');
+        el.style.padding='6px';
+        el.style.borderBottom='1px solid #e2e8f0';
+        el.innerHTML = `<strong style="cursor:pointer;color:#0b5fff">${p.title}</strong>`;
+        el.querySelector('strong').addEventListener('click', ()=> loadPageInline(p));
+        container.appendChild(el);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', ()=> init());
+  </script>
+</body>
+</html>
